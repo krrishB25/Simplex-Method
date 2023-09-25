@@ -1,0 +1,44 @@
+import numpy as np 
+def simplex_algorithm(c, A, b): 
+ m, n = A.shape 
+ # Add slack variables to convert inequalities to equalities 
+ A_slack = np.hstack((A, np.identity(m))) 
+ c_slack = np.hstack((c, np.zeros(m))) 
+ 
+ # Initialize the tableau 
+ tableau = np.vstack((np.hstack((A_slack, np.reshape(b, (m, 1)))), np.hstack((c_slack, 
+np.array([0]))))) 
+ 
+ while np.any(tableau[-1, :-1] > 0): 
+ entering_column = np.argmax(tableau[-1, :-1]) 
+ 
+ if np.all(tableau[:, entering_column] <= 0): 
+ raise Exception("Linear programming problem is unbounded") 
+ 
+ ratios = tableau[:-1, -1] / tableau[:-1, entering_column] 
+ leaving_row = np.argmin(ratios) 
+ 
+ pivot_element = tableau[leaving_row, entering_column] 
+ tableau[leaving_row, :] /= pivot_element 
+ 
+ for i in range(m + 1): 
+ if i != leaving_row: 
+ multiplier = -tableau[i, entering_column] 
+ tableau[i, :] += multiplier * tableau[leaving_row, :] 
+ 
+ optimal_solution = tableau[-1, -1] 
+ solution_variables = tableau[:-1, -1] 
+ 
+ return optimal_solution, solution_variables 
+# Example problem: 
+# Maximize: x + 3y 
+# Subject to: 
+# 3x + 6y <= 8 
+# 5x + 2y <= 10 
+# x, y >= 0 
+c = np.array([1, 3]) 
+A = np.array([[3, 6], [5, 2]]) 
+b = np.array([8, 10]) 
+optimal_solution, solution_variables = simplex_algorithm(c, A, b) 
+print("Optimal Solution:", optimal_solution) 
+print("Solution Variables:", solution_variables) 
