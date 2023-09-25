@@ -1,0 +1,37 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+ <meta charset="UTF-8"> 
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ <title>Simplex Method App</title> 
+ <link rel="stylesheet" href="styles.css"> 
+</head> 
+<body> 
+ <header> 
+ <h1>Simplex Method App</h1> 
+ </header> 
+ <main> 
+ <section id="input-section"> 
+ <h2>Enter Linear Programming Problem:</h2> 
+ <form id="simplex-form"> 
+ <label for="objective">Objective Function (Maximize):</label> 
+ <input type="text" id="objective" name="objective" placeholder="e.g., 2x1 + 3x2 - 
+x3" required><br><br> 
+ 
+ <label for="constraints">Constraints (e.g., 3x1 + 2x2 ≤ 10, x2 ≤ 4):</label> 
+ <textarea id="constraints" name="constraints" placeholder="Enter constraints, one 
+per line" rows="4" required></textarea><br><br> 
+ 
+ <button type="submit">Solve</button> 
+ </form> 
+ </section> 
+ <section id="output-section"> 
+ <h2>Results:</h2> 
+ <div id="output"> 
+ <!-- This is where you can display the Simplex Method results. --> 
+ </div> 
+ </section> 
+ </main> 
+ <script src="simplex.js"></script> 
+</body> 
+</html>
